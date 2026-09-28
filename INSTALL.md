@@ -1,26 +1,26 @@
 # Product Studio 安装与模型配置
 
-适用于当前正式版 v0.14.12。Product Studio 的发布包是 Node.js 服务，浏览器访问工作台；它不是桌面 EXE/MSI。ZIP 包含已构建的网页、服务端和运行依赖，不含 Node.js、用户数据和模型密钥。
+适用于当前正式版 v0.17.0。Product Studio 的发布包是 Node.js 服务，浏览器访问工作台；它不是桌面 EXE/MSI。ZIP 包含已构建的网页、服务端和运行依赖，不含 Node.js、用户数据和模型密钥。
 
 ## 准备与校验
 
 1. 安装 Node.js 22.13 或更高版本，运行 `node --version` 确认版本。使用 ZIP 不需要 `npm install`。
-2. 从 [最新正式发布](https://github.com/RocLing26/product-studio-releases/releases/latest) 下载 `product-studio-0.14.12-intranet.zip` 和 `product-studio-0.14.12-intranet.zip.sha256`，放在同一目录。
+2. 从 [最新正式发布](https://github.com/RocLing26/product-studio-releases/releases/latest) 下载 `product-studio-0.17.0-intranet.zip` 和 `product-studio-0.17.0-intranet.zip.sha256`，放在同一目录。
 3. 在该目录校验文件，再解压 ZIP：
 
 ```bash
 # macOS
-shasum -a 256 -c product-studio-0.14.12-intranet.zip.sha256
+shasum -a 256 -c product-studio-0.17.0-intranet.zip.sha256
 
 # Linux（二选一，执行这一行即可）
-sha256sum -c product-studio-0.14.12-intranet.zip.sha256
+sha256sum -c product-studio-0.17.0-intranet.zip.sha256
 ```
 
-Windows PowerShell 可运行 `Get-FileHash .\product-studio-0.14.12-intranet.zip -Algorithm SHA256`，将输出的哈希与 `.sha256` 文件第一列比较。校验失败时重新下载。
+Windows PowerShell 可运行 `Get-FileHash .\product-studio-0.17.0-intranet.zip -Algorithm SHA256`，将输出的哈希与 `.sha256` 文件第一列比较。校验失败时重新下载。
 
 ## 本机启动
 
-解压后进入 `product-studio-0.14.12-intranet` 目录，运行：
+解压后进入 `product-studio-0.17.0-intranet` 目录，运行：
 
 ```bash
 node server/index.mjs
