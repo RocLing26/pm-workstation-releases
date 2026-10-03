@@ -1,26 +1,26 @@
 # Product Studio 安装与模型配置
 
-适用于当前正式版 v0.17.0。Product Studio 的发布包是 Node.js 服务，浏览器访问工作台；它不是桌面 EXE/MSI。ZIP 包含已构建的网页、服务端和运行依赖，不含 Node.js、用户数据和模型密钥。
+适用于当前正式版 v0.18.16。Product Studio 的发布包是 Node.js 服务，浏览器访问工作台；它不是桌面 EXE/MSI。ZIP 包含已构建的网页、服务端和运行依赖，不含 Node.js、用户数据和模型密钥。
 
 ## 准备与校验
 
 1. 安装 Node.js 22.13 或更高版本，运行 `node --version` 确认版本。使用 ZIP 不需要 `npm install`。
-2. 从 [最新正式发布](https://github.com/RocLing26/product-studio-releases/releases/latest) 下载 `product-studio-0.17.0-intranet.zip` 和 `product-studio-0.17.0-intranet.zip.sha256`，放在同一目录。
+2. 从 [最新正式发布](https://github.com/RocLing26/product-studio-releases/releases/latest) 下载 `product-studio-0.18.16-intranet.zip` 和 `product-studio-0.18.16-intranet.zip.sha256`，放在同一目录。
 3. 在该目录校验文件，再解压 ZIP：
 
 ```bash
 # macOS
-shasum -a 256 -c product-studio-0.17.0-intranet.zip.sha256
+shasum -a 256 -c product-studio-0.18.16-intranet.zip.sha256
 
 # Linux（二选一，执行这一行即可）
-sha256sum -c product-studio-0.17.0-intranet.zip.sha256
+sha256sum -c product-studio-0.18.16-intranet.zip.sha256
 ```
 
-Windows PowerShell 可运行 `Get-FileHash .\product-studio-0.17.0-intranet.zip -Algorithm SHA256`，将输出的哈希与 `.sha256` 文件第一列比较。校验失败时重新下载。
+Windows PowerShell 可运行 `Get-FileHash .\product-studio-0.18.16-intranet.zip -Algorithm SHA256`，将输出的哈希与 `.sha256` 文件第一列比较。校验失败时重新下载。
 
 ## 本机启动
 
-解压后进入 `product-studio-0.17.0-intranet` 目录，运行：
+解压后进入 `product-studio-0.18.16-intranet` 目录，运行：
 
 ```bash
 node server/index.mjs
@@ -40,6 +40,22 @@ node server/index.mjs
 Windows PowerShell 可在启动前设置 `$env:PM_DATA_DIR = 'C:\ProductStudio\data'`。数据目录中包含工作记录和模型配置（包括 API Key），请限制访问权限并备份整个目录。
 
 升级时先停止服务，备份完整数据目录及内网部署使用的 `.env`；将新版 ZIP 解压到新的程序目录，用原来的 `PM_DATA_DIR` 和 `.env` 启动。不要覆盖正在运行的目录，也不要用旧版程序打开新版数据库。工作台可以检查、下载并校验正式更新，但不会自动替换程序。
+
+### 0.18.16 的备份与恢复命令
+
+在解压后的程序目录中运行以下命令；将占位路径替换为实际路径，备份输出放在数据目录之外：
+
+```bash
+node scripts/backup-data.mjs <数据目录> <备份输出目录> .env
+node scripts/backup-data.mjs --verify <生成的备份目录>
+node scripts/restore-data.mjs <生成的备份目录> <全新的恢复数据目录>
+```
+
+未使用.env的本机部署，备份命令省略最后的.env参数。备份包含SQLite在线副本、数据目录内的模型/搜索/运行/提示词配置和指定的.env，导入原件随数据库保存。恢复目标已经存在或校验不通过时拒绝恢复，不覆盖现有数据。恢复目录内的.env需按部署方式配置到程序根目录并更新PM_DATA_DIR；持续同步的外部资料目录另行保留。回退时同时使用升级前程序和对应数据备份。
+
+### PRD、原型与设计的复核
+
+PRD验收编号缺少定义或存在歧义时，修正正文并保存新版本，再复核和确认。原型自动检查需要管理员配置Python Playwright与Chromium；未启用时逐项记录人工检查，缺少检查不显示通过。原型、PRD或场景版本变化后重新验收，设计映射缺项按提示补齐。编号和结构检查不能替代业务规则核对。
 
 ## 内网 HTTPS 部署
 
